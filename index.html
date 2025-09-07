@@ -201,7 +201,7 @@
           return;
         }
         for (let i = 1; i <= le; i++) {
-          pw = pw + text[parseInt(Math.random() * text.length)];
+          pw = pw + text[Math.floor(Math.random() * text.length)];
         }
         msg.innerHTML = pw;
         document.getElementById("output").style.display = "flex";
@@ -241,5 +241,6 @@
     </div>
   </body>
 </html>
+
 
 
