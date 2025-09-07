@@ -165,7 +165,7 @@
     </style>
 
     <script>
-      function show() {
+      function show(event) {
         event.preventDefault();
         let len = document.getElementById("len");
         let lc = document.getElementById("lc");
@@ -174,7 +174,7 @@
         let sp = document.getElementById("sp");
         let le = parseInt(len.value);
         let pw = "";
-        if (len.value < 6 || len.value > 20) {
+        if (isNaN(le) || len.value < 6 || len.value > 20) {
           alert("Password Length should be min 6 and max 20");
           len.value = "";
           msg.innerHTML = "";
@@ -220,7 +220,7 @@
   <body>
     <h1>Password Generator</h1>
     <div class="fc">
-      <form onsubmit="show()">
+      <form onsubmit="show(event)">
         <label>Password Length</label>
         <br />
         <input type="number" id="len" placeholder="Enter Password Length" />
@@ -241,4 +241,5 @@
     </div>
   </body>
 </html>
+
 
