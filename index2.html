@@ -1,0 +1,243 @@
+<html>
+  <head>
+    <title>Password Generator App</title>
+    <style>
+      * {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(135deg, #ffecd2, #fcb69f);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      h1 {
+        margin-top: 30px;
+        font-size: 48px;
+        font-weight: 700;
+        color: #333;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .fc {
+        border: none;
+        width: 60%;
+        max-width: 500px;
+        border-radius: 20px;
+        background-color: #ffffff;
+        padding: 30px;
+        margin-top: 25px;
+        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+        text-align: center;
+      }
+
+      label {
+        font-size: 20px;
+        font-weight: 600;
+        color: #444;
+      }
+
+      input[type="number"] {
+        text-align: center;
+        width: 80%;
+        padding: 12px;
+        margin-top: 10px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        font-size: 18px;
+        transition: 0.3s;
+      }
+
+      input[type="number"]:focus {
+        border-color: #ff7f50;
+        outline: none;
+        box-shadow: 0px 0px 8px rgba(255, 127, 80, 0.4);
+      }
+
+      .check-group {
+        margin: 20px 0;
+        margin-left: 35px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        font-size: 18px;
+        align-items: center;
+      }
+
+      .check-group label {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        min-width: 200px;
+      }
+
+      .check-group input[type="checkbox"] {
+        margin-right: 8px;
+      }
+
+      .check-group input[type="checkbox"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+
+        width: 15px;
+        height: 15px;
+        border: 2px solid #333;
+        border-radius: 50%;
+        cursor: pointer;
+        position: relative;
+        outline: none;
+        transition: all 0.2s ease-in-out;
+        background-color: white;
+      }
+
+      /* when checked */
+      .check-group input[type="checkbox"]:checked {
+        background-color: #ff7f50;
+        border-color: #ff7f50;
+      }
+
+      .check-group input[type="checkbox"]:checked::after {
+        content: "✔";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -55%);
+        font-size: 10px;
+        color: white;
+        font-weight: bold;
+      }
+
+      input[type="checkbox"] {
+        margin-right: 5px;
+        transform: scale(1.2);
+      }
+
+      .check {
+        cursor: pointer;
+      }
+
+      input[type="submit"] {
+        margin-top: 20px;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #ff7f50, #ff6347);
+        color: white;
+        font-size: 20px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background: linear-gradient(135deg, #ff6347, #ff4500);
+      }
+      #output {
+        margin-top: 30px;
+        display: none;
+        align-items: center;
+        gap: 10px;
+        font-size: 26px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      #copyBtn {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #4caf50, #45a049);
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      #copyBtn:hover {
+        background: linear-gradient(135deg, #45a049, #388e3c);
+      }
+    </style>
+
+    <script>
+      function show() {
+        event.preventDefault();
+        let len = document.getElementById("len");
+        let lc = document.getElementById("lc");
+        let uc = document.getElementById("uc");
+        let di = document.getElementById("di");
+        let sp = document.getElementById("sp");
+        let le = parseInt(len.value);
+        let pw = "";
+        if (len.value < 6 || len.value > 20) {
+          alert("Password Length should be min 6 and max 20");
+          len.value = "";
+          msg.innerHTML = "";
+          len.focus();
+          document.getElementById("output").style.display = "none";
+          return;
+        }
+        let text = "";
+        if (lc.checked) {
+          text = text + "abcdefghijklmnopqrstuvwxyz";
+        }
+        if (uc.checked) {
+          text = text + "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        }
+        if (di.checked) {
+          text = text + "0123456789";
+        }
+        if (sp.checked) {
+          text = text + "!@#$%^&*()_+-=<>?{[]}";
+        }
+        if (text === "") {
+          alert("Please Select what your password should contain");
+          document.getElementById("output").style.display = "none";
+          return;
+        }
+        for (let i = 1; i <= le; i++) {
+          pw = pw + text[parseInt(Math.random() * text.length)];
+        }
+        msg.innerHTML = pw;
+        document.getElementById("output").style.display = "flex";
+      }
+
+      function copyPassword() {
+        let pw = document.getElementById("msg").innerText;
+        if (pw) {
+          navigator.clipboard.writeText(pw).then(() => {
+            alert("Password copied to clipboard!");
+          });
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Password Generator</h1>
+    <div class="fc">
+      <form onsubmit="show()">
+        <label>Password Length</label>
+        <br />
+        <input type="number" id="len" placeholder="Enter Password Length" />
+        <br /><br />
+        <label>Choose Password Elements</label>
+        <div class="check-group">
+          <label><input class="check" type="checkbox" id="lc" checked />Lowercase</label>
+          <label><input class="check" type="checkbox" id="uc" />Uppercase</label>
+          <label><input class="check" type="checkbox" id="di" />Digits</label>
+          <label><input class="check" type="checkbox" id="sp" />Special Character</label>
+        </div>
+        <input type="submit" value="Generate" />
+      </form>
+    </div>
+    <div id="output">
+      <span id="msg"></span>
+      <button id="copyBtn" onclick="copyPassword()">Copy</button>
+    </div>
+  </body>
+</html>
